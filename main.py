@@ -22,7 +22,7 @@ class BooksCollector:
             self.books_genre[name] = genre
 
     def get_book_genre(self, name):
-        '''Получить жанр книги по её имени.'''
+        '''Получить жанр книги по её названию.'''
         return self.books_genre.get(name)
 
     def get_books_with_specific_genre(self, genre):
@@ -39,8 +39,7 @@ class BooksCollector:
         return self.books_genre
 
     def get_books_for_children(self):
-        '''Получить книги, подходящие детям - отсутствует возрастной
-        рейтинг.'''
+        '''Получить книги, подходящие для детей (нет возрастного рейтинга).'''
         books_for_children = []
         for name, genre in self.books_genre.items():
             if genre not in self.genre_age_rating and genre in self.genre:
@@ -49,9 +48,8 @@ class BooksCollector:
 
     def add_book_in_favorites(self, name):
         '''Добавить книгу в избранное.'''
-        if name in self.books_genre:
-            if name not in self.favorites:
-                self.favorites.append(name)
+        if name in self.books_genre and name not in self.favorites:
+            self.favorites.append(name)
 
     def delete_book_from_favorites(self, name):
         '''Удалить книгу из избранного.'''
