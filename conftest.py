@@ -35,3 +35,12 @@ def valid_book_cat():
 def valid_book_john():
     '''Книга с допустимым названием про Джона.'''
     return 'В финале Джон умрёт'
+
+
+@pytest.fixture(  # параметризированная фикстура
+    scope='session',
+    params=['', 'Книга' * 8 + 'К'],
+    ids=['empty string', '41 chars']
+)
+def invalid_book_titles(request):
+    return request.param

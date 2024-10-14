@@ -7,13 +7,6 @@ from main import BooksCollector
 
 class TestBooksCollector:
     '''Набор тестов для покрытия приложения BooksCollector.'''
-    invalid_book_titles = [
-        pytest.param('', id='empty string'),
-        pytest.param(
-            'КнигаКнигаКнигаКнигаКнигаКнигаКнигаКнигаК', id='41 chars'
-        )
-    ]
-
     @pytest.fixture(autouse=True)
     def create_app_object(self):
         '''Создание нового объекта приложения для каждого теста.'''
@@ -52,8 +45,20 @@ class TestBooksCollector:
             self.collector.add_new_book(title)
         assert len(self.collector.get_books_genre()) == 2
 
-    @pytest.mark.parametrize('title', invalid_book_titles)
-    def test_add_new_book_add_invalid_book_not_added(self, title):
+    def test_add_new_book_add_invalid_book_not_added_V_1(
+            self, invalid_book_titles  # параметризированная фикстура
+         ):
+        '''Книги с недопустимыми названиями не добавляются.'''
+        self.collector.add_new_book(invalid_book_titles)
+        assert not self.collector.get_books_genre()
+
+    @pytest.mark.parametrize(  # то же самое ↑, но без создания фикстуры
+        'title',
+        [pytest.param('', id='empty string'),
+         pytest.param('Книга' * 8 + 'К', id='41 chars')]
+        # или простым списком ['', 'Книга' * 8 + 'К']
+    )
+    def test_add_new_book_add_invalid_book_not_added_V_2(self, title):
         '''Книги с недопустимыми названиями не добавляются.'''
         self.collector.add_new_book(title)
         assert not self.collector.get_books_genre()
