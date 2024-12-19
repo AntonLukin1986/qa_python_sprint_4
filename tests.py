@@ -11,7 +11,6 @@ class TestBooksCollector:
     def create_app_object(self):
         '''Создание нового объекта приложения для каждого теста.'''
         self.collector = BooksCollector()
-        return self.collector
 
     def test_init_books_genre_empty_dict(self):
         '''Словарь books_genre пустой у созданного объекта приложения.'''
